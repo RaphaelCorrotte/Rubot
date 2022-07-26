@@ -1,0 +1,11 @@
+module Rubot
+  class Manager
+    attr_accessor path: String
+
+    def initialize: (String) -> void
+    def files: (String) -> Array[String]
+    def load_commands: (Array[String]) -> void
+    def command_files: () -> Array[String]
+    def event_files: () -> Array[String]
+  end
+end

@@ -1,0 +1,10 @@
+module Rubot
+  class Client
+    attr_reader commands: Array[Hash[Symbol, Hash[Symbol, Object]]]
+    def intialize: () -> void
+
+    def run: (bool) -> void
+    def add_command: (name: String, block: Proc) -> String
+    def command: (String) -> (Hash[Symbol, Object] | false)
+  end
+end
