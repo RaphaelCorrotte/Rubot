@@ -32,5 +32,11 @@ module Rubot
     def event_files
       files(@events_path)
     end
+
+    def load
+      command_files.each { |file| Kernel.load file }
+      event_files.each { |file| Kernel.load file }
+      true
+    end
   end
 end

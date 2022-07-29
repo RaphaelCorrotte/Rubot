@@ -5,7 +5,8 @@ module Rubot
     def initialize: (String) -> void
     def files: (String) -> Array[String]
     def load_commands: (Array[String]) -> void
-    def command_files: () -> Array[String]
-    def event_files: () -> Array[String]
+    def command_files: -> Array[String]
+    def event_files: -> Array[String]
+    def load: -> bool
   end
 end

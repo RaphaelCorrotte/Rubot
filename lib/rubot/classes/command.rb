@@ -4,7 +4,7 @@ module Rubot
   class Command
     attr_reader :props, :execute
 
-    def initialize(name:, &execute)
+    def initialize(execute, name:)
       @props = Hash[:name => name]
       @execute = execute
     end

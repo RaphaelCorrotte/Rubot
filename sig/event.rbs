@@ -1,1 +1,10 @@
-$END$
+module Rubot
+  class Event
+    attr_reader name:  String
+    attr_reader execute: Proc
+    attr_reader attributes: Hash[Symbol, Object]
+
+    def initialize: (Proc, Hash[Symbol, Object], name: String) -> void
+    def run: -> void
+  end
+end

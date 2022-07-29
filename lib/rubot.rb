@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "rubot/version"
-require "rubot/classes/client"
+require File.expand_path("rubot/classes/client", File.dirname(__FILE__))
 
 module Rubot
   def self.client

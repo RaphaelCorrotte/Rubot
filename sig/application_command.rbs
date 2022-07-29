@@ -1,1 +1,13 @@
-$END$
+module Rubot
+  class ApplicationCommand
+    attr_reader client: Rubot::Client
+    attr_reader command: Hash[Symbol, String]
+    attr_reader subcommand: (Hash[Symbol, String] | nil)
+    attr_reader group: (Symbol | nil)
+    attr_reader execute: Proc
+
+    def initialize: (Rubot::Client, command: Hash[Symbol, String], subcommand: (Hash[Symbol, String] | nil), group: (Symbol | nil), props: (Hash[Symbol, String] | nil)) -> void
+    def create: -> void
+    def proprieties: -> void
+  end
+end

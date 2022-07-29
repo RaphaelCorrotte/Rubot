@@ -3,7 +3,7 @@ module Rubot
     attr_reader props: Hash[Symbol, String]
     attr_reader execute: Proc
 
-    def initialize: (name: String) -> void
+    def initialize: (Proc, name: String) -> void
     def []: (String) -> String
     def []=: (String, String) -> String
   end
