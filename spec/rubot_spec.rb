@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require File.expand_path("../lib/rubot", File.dirname(__FILE__))
+require "rubot"
 
 RSpec.describe Rubot do
   it "has a version number" do
@@ -12,11 +12,14 @@ RSpec.describe Rubot do
     expect(client).to be_a(Rubot::Client)
   end
 
-  it "manager works" do
+  it "application commands" do
+    client = Rubot.client
     manager = Rubot::Manager.new("spec/commands", "spec/events")
-    manager.command_files.each do |file|
-      load file
+    client.remove_application_commands
+    manager.load
+    Rubot.client.events.each do |event|
+      p event[1].run
     end
-    expect(Rubot.client.commands).to be_an(Hash)
+    client.run
   end
 end
