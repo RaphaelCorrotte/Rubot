@@ -16,3 +16,5 @@ gem "discordrb", :git => "https://github.com/shardlab/discordrb", :branch => "ma
 gem "dotenv"
 
 gem "mongo", "~> 2.18"
+
+gemspec
