@@ -1,0 +1,15 @@
+module Rubot
+  class RApplicationCommand
+    attr_reader client: Rubot::Client
+    attr_reader command: Hash[Symbol, String]
+    attr_reader subcommand: Hash[Symbol, String]?
+    attr_reader group: Symbol?
+    attr_reader execute: Proc
+    attr_reader props: Hash[Symbol, String]?
+    attr_reader application_command: Discordrb::ApplicationCommand?
+
+    def initialize: (Rubot::Client, command: Hash[Symbol, String], subcommand: Hash[Symbol, String]?, group: Symbol?, props: Hash[Symbol, String]?) -> void
+    def create: -> void
+    def proprieties: -> void
+  end
+end

@@ -14,3 +14,5 @@ gem "rspec", "~> 3.11"
 gem "discordrb", :git => "https://github.com/shardlab/discordrb", :branch => "main"
 
 gem "dotenv"
+
+gem "mongo", "~> 2.18"

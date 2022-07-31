@@ -5,33 +5,34 @@ require "dotenv/load"
 require File.expand_path("manager", File.dirname(__FILE__))
 require File.expand_path("command", File.dirname(__FILE__))
 require File.expand_path("event", File.dirname(__FILE__))
-require File.expand_path("application_command", File.dirname(__FILE__))
+require File.expand_path("rapplication_command", File.dirname(__FILE__))
 
 module Rubot
   class Client < Discordrb::Bot
-    attr_reader :commands, :events, :loaded_application_commands
+    attr_reader :commands, :events, :rapplication_commands
 
     def initialize
       super(:token => ENV["BOT_TOKEN"], :intents => :all, :ignore_bots => true)
     end
 
     def run(background = false)
+      @events.each(&:run)
       Thread.new do
         loop do
-          stop if $stdin.gets.chomp == ".exit"
+          stop if $stdin.gets.chomp.downcase.match?(/^\.exit/)
         end
       end
       super(background)
     end
 
     def add_command(name:, &block)
-      @commands ||= Hash[]
-      @commands[name] = Command.new(block, :name => name)
+      @commands ||= Array[]
+      @commands <<  Command.new(block, :name => name)
     end
 
     def add_event(attributes = {}, name:, &block)
-      @events ||= Hash[]
-      @events[name] = Event.new(block, attributes, :name => name)
+      @events ||= Array[]
+      @events << Event.new(block, attributes, :name => name)
     end
 
     def command(name)
@@ -42,16 +43,18 @@ module Rubot
       @events[name] || false
     end
 
-    def add_application_command(command:, subcommand: nil, group: nil, proprieties: nil, &block)
-      @loaded_application_commands ||= Hash[]
-      @loaded_application_commands[command[:name]] = ApplicationCommand.new(self, :command => command, :subcommand => subcommand, :group => group, :props => proprieties, &block)
-      @loaded_application_commands[command[:name]].create
+    def add_application_command(command:, subcommand: nil, group: nil, proprieties: nil, default_permission: nil, &block)
+      @rapplication_commands ||= Array[]
+      command = RApplicationCommand.new(self, :command => command, :subcommand => subcommand, :group => group, :props => proprieties, :default_permissions => default_permission, &block)
+      command.create
+      @rapplication_commands << command
     end
 
     def remove_application_commands
       get_application_commands.map(&:id).each do |id|
         delete_application_command(id)
       end
+      @rapplication_commands = Array[]
     end
 
     def stop(_no_sync = nil)
