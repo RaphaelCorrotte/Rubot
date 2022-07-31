@@ -15,7 +15,7 @@ GIT
 PATH
   remote: .
   specs:
-    discord_rubot (0.1.0)
+    discord_rubot (0.1.1)
       discordrb (~> 3.4.2)
       dotenv
       mongo
