@@ -3,7 +3,7 @@
 require_relative "lib/rubot/version"
 
 Gem::Specification.new do |spec|
-  spec.name = "rubot"
+  spec.name = "discord_rubot"
   spec.version = Rubot::VERSION
   spec.authors = ["Senchuu"]
   spec.email = ["senchuuuu@gmail.com"]

@@ -15,7 +15,7 @@ GIT
 PATH
   remote: .
   specs:
-    rubot (0.1.0)
+    discord_rubot (0.1.0)
       discordrb
       dotenv
       mongo
@@ -94,13 +94,13 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  discord_rubot!
   discordrb!
   dotenv
   mongo (~> 2.18)
   rake (~> 13.0)
   rspec (~> 3.11)
   rubocop
-  rubot!
 
 BUNDLED WITH
    2.3.4
