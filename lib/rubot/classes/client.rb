@@ -56,10 +56,5 @@ module Rubot
       end
       @rapplication_commands = Array[]
     end
-
-    def stop(_no_sync = nil)
-      remove_application_commands
-      super
-    end
   end
 end
