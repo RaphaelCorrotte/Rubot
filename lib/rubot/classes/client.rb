@@ -43,9 +43,9 @@ module Rubot
       @events[name] || false
     end
 
-    def add_application_command(command:, subcommand: nil, group: nil, proprieties: nil, default_permission: nil, &block)
+    def add_application_command(command:, subcommand: nil, group: nil, proprieties: nil, &block)
       @rapplication_commands ||= Array[]
-      command = RApplicationCommand.new(self, :command => command, :subcommand => subcommand, :group => group, :props => proprieties, :default_permissions => default_permission, &block)
+      command = RApplicationCommand.new(self, :command => command, :subcommand => subcommand, :group => group, :props => proprieties, &block)
       command.create
       @rapplication_commands << command
     end

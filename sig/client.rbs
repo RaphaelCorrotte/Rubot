@@ -8,7 +8,7 @@ module Rubot
     def run: (bool) -> void
     def add_command: (name: String, block: Proc) -> Command
     def command: (String) -> (Command | false)
-    def add_event: (?Hash[Symbol, Object], Proc, name: String) -> Event
+    def add_event: (?Hash[Symbol, Object], Proc, name: String) -> Array[Event]
     def event: (String) -> (Event | false)
     def add_application_command: (command: Hash[Symbol, String], subcommand: Hash[Symbol, String]?, group: Symbol?) -> void
     def remove_application_commands: () -> []

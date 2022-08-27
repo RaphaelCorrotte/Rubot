@@ -4,15 +4,14 @@ require "discordrb"
 
 module Rubot
   class RApplicationCommand
-    attr_reader :client, :command, :subcommand, :group, :execute, :props, :id, :default_permissions
+    attr_reader :client, :command, :subcommand, :group, :execute, :props, :id
 
-    def initialize(client, command:, subcommand: nil, group: nil, props: nil, default_permissions: nil, &block)
+    def initialize(client, command:, subcommand: nil, group: nil, props: nil, &block)
       @client = client
       @command = command
       @subcommand = subcommand
       @group = group
       @props = props
-      @default_permissions = default_permissions
       @execute = block
     end
 
@@ -20,7 +19,6 @@ module Rubot
       @client.register_application_command(@command[:name].to_sym, @command[:description]) do |command|
         unless @subcommand
           proprieties(command) if @props
-          permissions(command) if @default_permissions
           next
         end
 
@@ -28,13 +26,11 @@ module Rubot
           command.group(@group[:name].to_sym, @group[:description]) do |group|
             group.command(@subcommand[:name].to_sym, @subcommand[:description]) do |b|
               proprieties(b) if @props
-              permissions(command) if @default_permissions
             end
           end
         else
           command.subcommand(@subcommand[:name].to_sym, @subcommand[:description]) do |b|
             proprieties(b) if @props
-            permissions(command) if @default_permissions
           end
         end
       end
@@ -64,8 +60,6 @@ module Rubot
         builder.method(prop.delete(:type)).call(prop.delete(:name), prop.delete(:description), **prop)
       end
     end
-
-    def permissions(builder); end
 
     def application_command
       return nil unless @id
