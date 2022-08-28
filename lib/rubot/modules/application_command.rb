@@ -36,6 +36,7 @@ module Rubot
           cmd = application_command(command[:command][:name].to_sym) do |event|
             command[:run].call(event) unless command[:subcommand]
           end
+          next unless command[:subcommand]
 
           cmd.subcommand(command[:subcommand][:name].to_sym) do |event|
             command[:run].call(event) if command[:subcommand]
