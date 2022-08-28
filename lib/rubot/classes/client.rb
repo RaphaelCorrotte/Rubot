@@ -5,18 +5,22 @@ require "dotenv/load"
 require File.expand_path("manager", File.dirname(__FILE__))
 require File.expand_path("command", File.dirname(__FILE__))
 require File.expand_path("event", File.dirname(__FILE__))
-require File.expand_path("rapplication_command", File.dirname(__FILE__))
+require File.expand_path("../modules/application_command", File.dirname(__FILE__))
 
 module Rubot
   class Client < Discordrb::Bot
-    attr_reader :commands, :events, :rapplication_commands
+    attr_reader :commands, :events, :application_commands_queue, :manager
 
-    def initialize
+    include ApplicationCommand
+    def initialize(application_commands_path:, commands_path: nil, events_path: nil)
+      @manager = Manager.new(application_commands_path: application_commands_path, commands_path: commands_path, events_path: events_path)
       super(:token => ENV["BOT_TOKEN"], :intents => :all, :ignore_bots => true)
     end
 
     def run(background = false)
-      @events.each(&:run)
+      @manager.load
+      launch_application_commands
+      @events&.each(&:run)
       Thread.new do
         loop do
           stop if $stdin.gets.chomp.downcase.match?(/^\.exit/)
@@ -43,23 +47,11 @@ module Rubot
       @events[name] || false
     end
 
-    def add_application_command(command:, subcommand: nil, group: nil, proprieties: nil, &block)
-      @rapplication_commands ||= Array[]
-      command = RApplicationCommand.new(self, :command => command, :subcommand => subcommand, :group => group, :props => proprieties, &block)
-      command.create
-      @rapplication_commands << command
-    end
-
     def remove_application_commands
       get_application_commands.map(&:id).each do |id|
         delete_application_command(id)
       end
-      @rapplication_commands = Array[]
-    end
-
-    def stop(_no_sync = nil)
-      remove_application_commands
-      super
+      @application_commands = Array[]
     end
   end
 end
