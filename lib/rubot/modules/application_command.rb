@@ -16,7 +16,7 @@ module Rubot
     end
 
     def launch_application_commands
-      @application_commands_queue.sort_by { |c| c[:command][:name] }.each do |command|
+      @application_commands_queue.each do |command|
         command.transform_keys!(&:to_sym)
         register_application_command(command[:command][:name].to_s, command[:command][:description].to_s) do |option_builder|
           if command[:subcommand]
