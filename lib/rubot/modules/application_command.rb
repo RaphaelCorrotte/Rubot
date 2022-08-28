@@ -16,14 +16,14 @@ module Rubot
     end
 
     def launch_application_commands
-      @application_commands_queue.transform_keys!(&:to_sym).sort_by { |c| c[:command][:name] }.each do |command|
-        register_application_command(command[:name].to_s, command[:description].to_s) do |option_builder|
+      @application_commands_queue.sort_by { |c| c[:command][:name] }.each do |command|
+        command.transform_keys!(&:to_sym)
+        register_application_command(command[:command][:name].to_s, command[:command][:description].to_s) do |option_builder|
           if command[:subcommand]
             @application_commands_queue.each do |subcommand|
               next unless subcommand[:command][:name] == command[:command][:name] && subcommand[:subcommand]
 
-              binding.eval("#{option_builder.subcommand(subcommand[:subcommand][:name].to_s,
-                                                subcommand[:subcommand][:description].to_s)}#{subcommand[:group] ? ".group(#{subcommand[:group]})" : ""}") do |sub_option_builder|
+              option_builder.subcommand(subcommand[:subcommand][:name].to_s, subcommand[:subcommand][:description].to_s) do |sub_option_builder|
                 command[:options].call(sub_option_builder)
               end
               @application_commands_queue.delete(subcommand)
@@ -31,6 +31,14 @@ module Rubot
           else
             command[:options].call(option_builder)
             @application_commands_queue.delete(command)
+          end
+
+          cmd = application_command(command[:command][:name].to_sym) do |event|
+            command[:run].call(event) unless command[:subcommand]
+          end
+
+          cmd.subcommand(command[:subcommand][:name].to_sym) do |event|
+            command[:run].call(event) if command[:subcommand]
           end
         end
       end

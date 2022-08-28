@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.description = "Use rubot as a command handler for, your ruby written discord bot. Simply to use, and fun!"
   spec.homepage = "https://github.com/Senchuu/rubot"
   spec.license = "MIT"
-  spec.required_ruby_version = ">= 2.6.0"
+  spec.required_ruby_version = ">= 3.1.2"
 
   spec.metadata["allowed_push_host"] = "https://rubygems.org"
 

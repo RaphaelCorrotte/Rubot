@@ -1,17 +1,17 @@
 module Rubot
   class Client
-    attr_reader commands: Array[Command]
-    attr_reader events: Array[Event]
-    attr_reader rapplication_commands: Array[RApplicationCommand]
+    attr_reader commands: Array[Command]?
+    attr_reader events: Array[Event]?
+    attr_reader application_commands_queue: Array[ApplicationCommand]?
+    attr_reader manager: Manager
 
     def intialize: -> void
     def run: (bool) -> void
-    def add_command: (name: String, block: Proc) -> Command
+    def add_command: (name: String, block: Proc) -> Array[Command]
     def command: (String) -> (Command | false)
     def add_event: (?Hash[Symbol, Object], Proc, name: String) -> Array[Event]
     def event: (String) -> (Event | false)
-    def add_application_command: (command: Hash[Symbol, String], subcommand: Hash[Symbol, String]?, group: Symbol?) -> void
+    def add_application_command: (command: Hash[Symbol, String], subcommand: Hash[Symbol, String]?, group: String?) -> void
     def remove_application_commands: () -> []
-    def stop: () -> void
   end
 end

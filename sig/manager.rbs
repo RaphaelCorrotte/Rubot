@@ -1,12 +1,15 @@
 module Rubot
   class Manager
-    attr_accessor path: String
+    attr_accessor application_commands_path: String
+    attr_accessor commands_path: String?
+    attr_accessor events_path: String?
 
-    def initialize: (String) -> void
+    def initialize: (application_commands_path: String, commands_path: String?, events_path: String?) -> void
     def files: (String) -> Array[String]
     def load_commands: (Array[String]) -> void
-    def command_files: -> Array[String]
-    def event_files: -> Array[String]
+    def commands_files: -> Array[String]?
+    def events_files: -> Array[String]?
+    def application_commands_files: -> Array[String]
     def load: -> bool
   end
 end
