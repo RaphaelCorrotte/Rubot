@@ -51,7 +51,11 @@ module Rubot
       get_application_commands.map(&:id).each do |id|
         delete_application_command(id)
       end
+<<<<<<< HEAD
       @application_commands = Array[]
+=======
+      @rapplication_commands = Array[]
+>>>>>>> 3d890a78282830f5bd0caef19c5791ae9a4f4d83
     end
   end
 end
