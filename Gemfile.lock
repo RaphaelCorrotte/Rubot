@@ -15,7 +15,7 @@ GIT
 PATH
   remote: .
   specs:
-    discord_rubot (0.1.4)
+    discord_rubot (0.1.5)
 
 GEM
   remote: https://rubygems.org/
