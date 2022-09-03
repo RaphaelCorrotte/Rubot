@@ -4,12 +4,13 @@ require "discordrb"
 
 module Rubot
   module ApplicationCommand
-    def add_application_command(command:, subcommand: nil, group: nil, options: ->(option_builder) { option_builder }, &block)
+    def add_application_command(command:, subcommand: nil, group: nil, options: ->(option_builder) { option_builder }, type: :chat_input &block)
       @application_commands_queue ||= Array[]
       @application_commands_queue << Hash[
         :command => command,
         :subcommand => subcommand,
         :group => group,
+        :type => type,
         :options => options,
         :run => block
       ]
@@ -18,7 +19,7 @@ module Rubot
     def launch_application_commands
       @application_commands_queue.each do |command|
         command.transform_keys!(&:to_sym)
-        register_application_command(command[:command][:name].to_s, command[:command][:description].to_s) do |option_builder|
+        register_application_command(command[:command][:name].to_s, command[:command][:description].to_s, :type => command[:type] || :chat_input) do |option_builder|
           if command[:subcommand]
             @application_commands_queue.each do |subcommand|
               next unless subcommand[:command][:name] == command[:command][:name] && subcommand[:subcommand]

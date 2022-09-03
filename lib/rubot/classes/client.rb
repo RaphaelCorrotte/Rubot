@@ -13,7 +13,7 @@ module Rubot
 
     include ApplicationCommand
     def initialize(application_commands_path:, commands_path: nil, events_path: nil)
-      @manager = Manager.new(application_commands_path: application_commands_path, commands_path: commands_path, events_path: events_path)
+      @manager = Manager.new(:application_commands_path => application_commands_path, :commands_path => commands_path, :events_path => events_path)
       super(:token => ENV["BOT_TOKEN"], :intents => :all, :ignore_bots => true)
     end
 

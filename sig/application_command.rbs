@@ -1,6 +1,6 @@
 module Rubot
   module ApplicationCommand
-    def add_application_command: (command: Hash[Symbol, String], subcommand: Hash[Symbol, String]?, group: String?) -> void
+    def add_application_command: (command: Hash[Symbol, String], subcommand: Hash[Symbol, String]?, group: String?, type: Symbol) -> void
     def launch_application_commands: -> []
   end
 end
