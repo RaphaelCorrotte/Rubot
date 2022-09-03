@@ -4,7 +4,7 @@ require "discordrb"
 
 module Rubot
   module ApplicationCommand
-    def add_application_command(command:, subcommand: nil, group: nil, options: ->(option_builder) { option_builder }, type: :chat_input &block)
+    def add_application_command(command:, subcommand: nil, group: nil, options: ->(option_builder) { option_builder }, type: :chat_input, &block)
       @application_commands_queue ||= Array[]
       @application_commands_queue << Hash[
         :command => command,
